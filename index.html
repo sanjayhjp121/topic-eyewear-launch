@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOPIC EYEWEAR — Coming Soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #0a0a0a;
+      --gold:   #c9a96e;
+      --cream:  #f5f2ed;
+      --dim:    rgba(255,255,255,0.45);
+      --faint:  rgba(255,255,255,0.1);
+      --serif:  'Cormorant Garamond', Georgia, serif;
+      --sans:   'Montserrat', Helvetica, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      font-family: var(--sans);
+      color: #fff;
+      min-height: 100svh;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════════════════════════
+       AMBIENT BACKGROUND SLIDESHOW
+    ═══════════════════════════════ */
+    .bg-slideshow {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .bg-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 2s ease;
+      transform: scale(1.04);
+      animation: slow-zoom 18s ease-in-out infinite alternate;
+    }
+
+    .bg-slide.active { opacity: 1; }
+
+    /* Four editorial eyewear/fashion images from Unsplash */
+    .bg-slide:nth-child(1) {
+      background-image: url('https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=1920&auto=format&fit=crop');
+      animation-delay: 0s;
+    }
+    .bg-slide:nth-child(2) {
+      background-image: url('https://images.unsplash.com/photo-1508296695146-257a814070b4?q=80&w=1920&auto=format&fit=crop');
+      animation-delay: -4.5s;
+    }
+    .bg-slide:nth-child(3) {
+      background-image: url('https://images.unsplash.com/photo-1574258495973-f010dfbb5371?q=80&w=1920&auto=format&fit=crop');
+      animation-delay: -9s;
+    }
+    .bg-slide:nth-child(4) {
+      background-image: url('https://images.unsplash.com/photo-1473496169904-658ba7574b0d?q=80&w=1920&auto=format&fit=crop');
+      animation-delay: -13.5s;
+    }
+
+    @keyframes slow-zoom {
+      from { transform: scale(1.0); }
+      to   { transform: scale(1.08); }
+    }
+
+    /* Dark vignette overlay */
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(to bottom,
+          rgba(0,0,0,0.72) 0%,
+          rgba(0,0,0,0.38) 40%,
+          rgba(0,0,0,0.55) 70%,
+          rgba(0,0,0,0.82) 100%),
+        radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55) 100%);
+    }
+
+    /* ═══════════════════════════════
+       MAIN CONTENT
+    ═══════════════════════════════ */
+    .page {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100svh;
+    }
+
+    /* ── Header ── */
+    header {
+      width: 100%;
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    }
+
+    .logo-wrap {
+      height: 50px;
+      overflow: hidden;
+      display: flex;
+      opacity: 0;
+      animation: fade-up 1s ease 0.2s forwards;
+    }
+
+    .logo-img {
+      height: 160px;
+      width: auto;
+      filter: invert(1) brightness(0.95);
+      margin-top: -53px;
+      flex-shrink: 0;
+    }
+
+    .header-tag {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--dim);
+      opacity: 0;
+      animation: fade-up 1s ease 0.4s forwards;
+    }
+
+    /* ── Marquee ── */
+    .marquee-wrap {
+      width: 100%;
+      overflow: hidden;
+      border-bottom: 0.5px solid rgba(255,255,255,0.07);
+      padding: 11px 0;
+      opacity: 0;
+      animation: fade-in 1s ease 0.6s forwards;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+
+    .marquee-track span {
+      font-family: var(--sans);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      padding: 0 28px;
+      white-space: nowrap;
+    }
+
+    .marquee-track .dot {
+      color: var(--gold);
+      padding: 0 4px;
+      letter-spacing: 0;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── Hero center ── */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 56px 24px 40px;
+      gap: 0;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fade-up 1s ease 0.7s forwards;
+    }
+
+    .hero-headline {
+      font-family: var(--serif);
+      font-size: clamp(46px, 10vw, 90px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.08;
+      letter-spacing: .01em;
+      color: #fff;
+      max-width: 700px;
+      opacity: 0;
+      animation: fade-up 1.1s ease 0.85s forwards;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-rule {
+      width: 40px;
+      height: 0.5px;
+      background: rgba(255,255,255,0.2);
+      margin: 28px auto;
+      opacity: 0;
+      animation: fade-in 1s ease 1s forwards;
+    }
+
+    .hero-tagline {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--dim);
+      opacity: 0;
+      animation: fade-up 1s ease 1.1s forwards;
+    }
+
+    /* ── Countdown ── */
+    .countdown-section {
+      margin-top: 52px;
+      text-align: center;
+      opacity: 0;
+      animation: fade-up 1s ease 1.2s forwards;
+    }
+
+    .countdown-eyebrow {
+      font-family: var(--sans);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: .36em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      margin-bottom: 20px;
+    }
+
+    .countdown {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .cd-unit { display: flex; flex-direction: column; align-items: center; }
+
+    .cd-box {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(255,255,255,0.12);
+      color: #fff;
+      font-family: var(--serif);
+      font-size: clamp(38px, 9vw, 72px);
+      font-weight: 300;
+      line-height: 1;
+      padding: 20px 24px 16px;
+      min-width: clamp(80px, 18vw, 116px);
+      text-align: center;
+      letter-spacing: .02em;
+      transition: background .3s;
+    }
+
+    .cd-box.flash {
+      background: rgba(201,169,110,0.15);
+      border-color: rgba(201,169,110,0.3);
+    }
+
+    .cd-sep {
+      font-family: var(--serif);
+      font-size: clamp(32px, 8vw, 60px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.18);
+      padding: 16px 2px 0;
+      line-height: 1;
+    }
+
+    .cd-lbl {
+      font-family: var(--sans);
+      font-size: 7px;
+      font-weight: 400;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-top: 10px;
+    }
+
+    .countdown-date {
+      margin-top: 18px;
+      font-family: var(--serif);
+      font-size: clamp(13px, 2.5vw, 16px);
+      font-style: italic;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ── Form section ── */
+    .form-section {
+      margin-top: 56px;
+      width: 100%;
+      max-width: 480px;
+      padding: 0 24px;
+      opacity: 0;
+      animation: fade-up 1s ease 1.5s forwards;
+    }
+
+    .form-card {
+      background: rgba(10,10,10,0.72);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 0.5px solid rgba(255,255,255,0.1);
+      padding: 36px 36px 32px;
+    }
+
+    .form-headline {
+      font-family: var(--serif);
+      font-size: clamp(20px, 4.5vw, 26px);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.4;
+      margin-bottom: 5px;
+    }
+
+    .form-sub {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      margin-bottom: 28px;
+    }
+
+    .field { margin-bottom: 16px; }
+
+    .field label {
+      display: block;
+      font-family: var(--sans);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 8px;
+    }
+
+    .field input {
+      width: 100%;
+      background: none;
+      border: none;
+      border-bottom: 0.5px solid rgba(255,255,255,0.15);
+      padding: 8px 0 11px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 300;
+      color: #fff;
+      outline: none;
+      transition: border-color .25s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .field input::placeholder { color: rgba(255,255,255,0.2); }
+
+    .field input:focus { border-bottom-color: var(--gold); }
+
+    .field input.error { border-bottom-color: #d06060; }
+
+    .field-error {
+      font-size: 9px;
+      letter-spacing: .1em;
+      color: #d07070;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .field-error.visible { display: block; }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 28px;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      padding: 18px 24px;
+      cursor: pointer;
+      transition: background .2s, opacity .2s, transform .1s;
+      position: relative;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: #d4b47c;
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:active:not(:disabled) { transform: translateY(0); }
+
+    .submit-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    .submit-btn .btn-text { transition: opacity .2s; }
+
+    .submit-btn .btn-spinner {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      width: 16px; height: 16px;
+      border: 1.5px solid rgba(0,0,0,0.2);
+      border-top-color: var(--black);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+
+    .submit-btn.loading .btn-text { opacity: 0; }
+    .submit-btn.loading .btn-spinner { display: block; }
+
+    .form-error {
+      margin-top: 14px;
+      font-size: 9px;
+      letter-spacing: .12em;
+      color: #d07070;
+      display: none;
+      text-align: center;
+    }
+
+    .form-error.visible { display: block; }
+
+    /* ── Success view ── */
+    .success-state { display: none; text-align: center; padding: 24px 0 12px; }
+    .success-state.visible { display: block; }
+
+    .success-icon {
+      width: 44px; height: 44px;
+      border: 0.5px solid rgba(201,169,110,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 22px;
+    }
+
+    .success-icon svg { width: 16px; height: 16px; }
+
+    .success-headline {
+      font-family: var(--serif);
+      font-size: clamp(24px, 5.5vw, 32px);
+      font-style: italic;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .success-sub {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.32);
+      line-height: 2;
+    }
+
+    /* ── Footer ── */
+    footer {
+      width: 100%;
+      padding: 36px 40px 32px;
+      margin-top: 56px;
+      border-top: 0.5px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0;
+      animation: fade-in 1s ease 1.8s forwards;
+    }
+
+    .footer-left {
+      font-family: var(--sans);
+      font-size: 8px;
+      font-weight: 300;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .footer-right {
+      font-family: var(--serif);
+      font-size: 11px;
+      font-style: italic;
+      color: rgba(255,255,255,0.15);
+    }
+
+    /* ── Animations ── */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%,-50%) rotate(360deg); }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 520px) {
+      header { padding: 20px 20px; }
+      .logo-wrap { height: 40px; }
+      .logo-img { height: 128px; margin-top: -42px; }
+      .cd-box { padding: 14px 14px 11px; min-width: clamp(64px, 20vw, 90px); }
+      .form-card { padding: 26px 22px 24px; }
+      footer { flex-direction: column; gap: 10px; text-align: center; padding: 28px 20px; }
+    }
+
+    @media (max-width: 360px) {
+      .cd-sep { display: none; }
+      .countdown { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient background slideshow -->
+  <div class="bg-slideshow" aria-hidden="true">
+    <div class="bg-slide active"></div>
+    <div class="bg-slide"></div>
+    <div class="bg-slide"></div>
+    <div class="bg-slide"></div>
+  </div>
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <!-- Page content -->
+  <div class="page">
+
+    <!-- Header -->
+    <header>
+      <div class="logo-wrap">
+        <img
+          class="logo-img"
+          src="Topic%20logo.png"
+          alt="Topic Eyewear"
+        >
+      </div>
+      <span class="header-tag">Canada · Est. 2026</span>
+    </header>
+
+    <!-- Marquee ticker -->
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="marquee-track">
+        <!-- repeated twice so the loop is seamless -->
+        <span>Curated Once</span><span class="dot">·</span>
+        <span>Never Restocked</span><span class="dot">·</span>
+        <span>Prada</span><span class="dot">·</span>
+        <span>Maui Jim</span><span class="dot">·</span>
+        <span>Tiffany &amp; Co</span><span class="dot">·</span>
+        <span>Coach</span><span class="dot">·</span>
+        <span>Polo Ralph Lauren</span><span class="dot">·</span>
+        <span>Lafont</span><span class="dot">·</span>
+        <span>Topic Eyewear</span><span class="dot">·</span>
+        <span>Canada</span><span class="dot">·</span>
+        <span>Launching June 2026</span><span class="dot">·</span>
+
+        <span>Curated Once</span><span class="dot">·</span>
+        <span>Never Restocked</span><span class="dot">·</span>
+        <span>Prada</span><span class="dot">·</span>
+        <span>Maui Jim</span><span class="dot">·</span>
+        <span>Tiffany &amp; Co</span><span class="dot">·</span>
+        <span>Coach</span><span class="dot">·</span>
+        <span>Polo Ralph Lauren</span><span class="dot">·</span>
+        <span>Lafont</span><span class="dot">·</span>
+        <span>Topic Eyewear</span><span class="dot">·</span>
+        <span>Canada</span><span class="dot">·</span>
+        <span>Launching June 2026</span><span class="dot">·</span>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+      <p class="hero-eyebrow">The Collection Arrives</p>
+      <h1 class="hero-headline">
+        Something worth<br>
+        <em>waiting for.</em>
+      </h1>
+      <div class="hero-rule"></div>
+      <p class="hero-tagline">Curated once &nbsp;·&nbsp; Never restocked</p>
+
+      <!-- Countdown -->
+      <div class="countdown-section">
+        <p class="countdown-eyebrow">Launching in</p>
+        <div class="countdown">
+          <div class="cd-unit">
+            <div class="cd-box" id="cd-days">12</div>
+            <span class="cd-lbl">Days</span>
+          </div>
+          <span class="cd-sep" aria-hidden="true">·</span>
+          <div class="cd-unit">
+            <div class="cd-box" id="cd-hours">00</div>
+            <span class="cd-lbl">Hours</span>
+          </div>
+          <span class="cd-sep" aria-hidden="true">·</span>
+          <div class="cd-unit">
+            <div class="cd-box" id="cd-mins">00</div>
+            <span class="cd-lbl">Min</span>
+          </div>
+          <span class="cd-sep" aria-hidden="true">·</span>
+          <div class="cd-unit">
+            <div class="cd-box" id="cd-secs">00</div>
+            <span class="cd-lbl">Sec</span>
+          </div>
+        </div>
+        <p class="countdown-date">June 15, 2026</p>
+      </div>
+    </section>
+
+    <!-- Waitlist form -->
+    <div class="form-section">
+      <div class="form-card">
+
+        <div id="form-view">
+          <p class="form-headline">Get early access.</p>
+          <p class="form-sub">Join the waitlist · Be first in line</p>
+
+          <!-- Google Sheets: paste your Apps Script Web App URL below -->
+          <form id="waitlist-form" action="https://script.google.com/macros/s/AKfycbx9QVM86qzwsccMaYy0bCc3Yv5Y6be-mwqYVjoEoAtfNE6HuDI0Sd5OD-qRg_zVQuCoiA/exec" method="POST" novalidate>
+
+            <div class="field">
+              <label for="email">Email address <span style="color:var(--gold)">*</span></label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" inputmode="email" required>
+              <span class="field-error" id="email-error">Enter a valid email address (e.g. you@example.com).</span>
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone <span style="font-size:7px;letter-spacing:.1em;color:rgba(255,255,255,0.2)">(optional)</span></label>
+              <input type="tel" id="phone" name="phone" placeholder="6475551234" autocomplete="tel" inputmode="numeric" maxlength="15">
+              <span class="field-error" id="phone-error">Enter a valid phone number (digits only, 10–15 digits).</span>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn">
+              <span class="btn-text">Join the Waitlist</span>
+              <span class="btn-spinner"></span>
+            </button>
+
+            <p class="form-error" id="form-error">Something went wrong. Please try again.</p>
+          </form>
+        </div>
+
+        <div class="success-state" id="success-view">
+          <div class="success-icon">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 8.5L6 12L13.5 4" stroke="#c9a96e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="success-headline">You're on the list.</p>
+          <p class="success-sub">
+            We'll reach out<br>
+            before we open our doors.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <span class="footer-left">Topic Eyewear &nbsp;·&nbsp; Canada &nbsp;·&nbsp; © 2026</span>
+      <span class="footer-right">Curated once. Never restocked.</span>
+    </footer>
+
+  </div><!-- /page -->
+
+  <script>
+    /* ═══════════════════════════════
+       BACKGROUND SLIDESHOW
+    ═══════════════════════════════ */
+    (function () {
+      const slides = document.querySelectorAll('.bg-slide');
+      let current = 0;
+      const INTERVAL = 6000;
+
+      function next() {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }
+
+      setInterval(next, INTERVAL);
+    }());
+
+    /* ═══════════════════════════════
+       COUNTDOWN
+    ═══════════════════════════════ */
+    (function () {
+      const target = new Date('2026-06-15T00:00:00').getTime();
+
+      function pad(n) { return String(n).padStart(2, '0'); }
+
+      function flash(id) {
+        const el = document.getElementById(id);
+        el.classList.add('flash');
+        setTimeout(() => el.classList.remove('flash'), 300);
+      }
+
+      let prevSecs = -1;
+
+      function tick() {
+        const diff = target - Date.now();
+
+        if (diff <= 0) {
+          ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => {
+            document.getElementById(id).textContent = '00';
+          });
+          return;
+        }
+
+        const days  = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        const mins  = Math.floor((diff % 3600000)  / 60000);
+        const secs  = Math.floor((diff % 60000)    / 1000);
+
+        document.getElementById('cd-days').textContent  = pad(days);
+        document.getElementById('cd-hours').textContent = pad(hours);
+        document.getElementById('cd-mins').textContent  = pad(mins);
+        document.getElementById('cd-secs').textContent  = pad(secs);
+
+        if (secs !== prevSecs) {
+          flash('cd-secs');
+          if (secs === 59) flash('cd-mins');
+          prevSecs = secs;
+        }
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    }());
+
+    /* ═══════════════════════════════
+       FORM
+    ═══════════════════════════════ */
+    (function () {
+      const form        = document.getElementById('waitlist-form');
+      const emailInput  = document.getElementById('email');
+      const phoneInput  = document.getElementById('phone');
+      const emailError  = document.getElementById('email-error');
+      const phoneError  = document.getElementById('phone-error');
+      const submitBtn   = document.getElementById('submit-btn');
+      const formError   = document.getElementById('form-error');
+      const formView    = document.getElementById('form-view');
+      const successView = document.getElementById('success-view');
+
+      const emailRe = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      function isValidEmail(value) {
+        const email = value.trim();
+        if (!email) return false;
+        if (!emailRe.test(email)) return false;
+        const [local, domain] = email.split('@');
+        if (!local || !domain || local.length > 64) return false;
+        if (domain.startsWith('.') || domain.endsWith('.') || domain.includes('..')) return false;
+        return true;
+      }
+
+      function phoneDigits(value) {
+        return value.replace(/\D/g, '');
+      }
+
+      function isValidPhone(value) {
+        const digits = phoneDigits(value);
+        if (!digits) return true; // optional field
+        return digits.length >= 10 && digits.length <= 15;
+      }
+
+      function setErr(input, errEl, show) {
+        input.classList.toggle('error', show);
+        errEl.classList.toggle('visible', show);
+      }
+
+      function validateEmail(showError) {
+        const ok = isValidEmail(emailInput.value);
+        if (showError || emailInput.classList.contains('error')) {
+          setErr(emailInput, emailError, !ok);
+        }
+        return ok;
+      }
+
+      function validatePhone(showError) {
+        const ok = isValidPhone(phoneInput.value);
+        if (showError || phoneInput.classList.contains('error')) {
+          setErr(phoneInput, phoneError, !ok);
+        }
+        return ok;
+      }
+
+      function validate() {
+        const emailOk = validateEmail(true);
+        const phoneOk = validatePhone(true);
+        return emailOk && phoneOk;
+      }
+
+      // Phone: digits only while typing
+      phoneInput.addEventListener('input', () => {
+        const digits = phoneDigits(phoneInput.value);
+        if (phoneInput.value !== digits) {
+          phoneInput.value = digits;
+        }
+        validatePhone(false);
+      });
+
+      emailInput.addEventListener('input', () => validateEmail(false));
+      emailInput.addEventListener('blur', () => validateEmail(true));
+      phoneInput.addEventListener('blur', () => validatePhone(true));
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        formError.classList.remove('visible');
+        if (!validate()) return;
+
+        submitBtn.disabled = true;
+        submitBtn.classList.add('loading');
+
+        const scriptUrl = form.action;
+        if (!scriptUrl || scriptUrl.includes('PASTE_YOUR')) {
+          formError.textContent = 'Waitlist backend is not configured yet.';
+          formError.classList.add('visible');
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('loading');
+          return;
+        }
+
+        const payload = {
+          email:     emailInput.value.trim().toLowerCase(),
+          phone:     phoneDigits(phoneInput.value),
+          timestamp: new Date().toISOString()
+        };
+
+        // text/plain avoids CORS preflight; no-cors is required for Apps Script from a static site.
+        try {
+          await fetch(scriptUrl, {
+            method:  'POST',
+            mode:    'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body:    JSON.stringify(payload)
+          });
+
+          formView.style.display = 'none';
+          successView.classList.add('visible');
+        } catch (_) {
+          formError.textContent = 'Network error. Please check your connection and try again.';
+          formError.classList.add('visible');
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('loading');
+        }
+      });
+    }());
+  </script>
+
+</body>
+</html>
