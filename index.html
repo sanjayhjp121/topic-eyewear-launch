@@ -238,79 +238,47 @@
       animation: fade-up 1s ease 1.1s forwards;
     }
 
-    /* ── Countdown ── */
-    .countdown-section {
+    /* ── Coming soon callout ── */
+    .coming-soon-panel {
       margin-top: 52px;
       text-align: center;
       opacity: 0;
       animation: fade-up 1s ease 1.2s forwards;
     }
 
-    .countdown-eyebrow {
+    .coming-soon-label {
       font-family: var(--sans);
       font-size: 8px;
       font-weight: 400;
       letter-spacing: .36em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.28);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    .countdown {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .cd-unit { display: flex; flex-direction: column; align-items: center; }
-
-    .cd-box {
+    .coming-soon-title {
+      display: inline-block;
       background: rgba(255,255,255,0.06);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 0.5px solid rgba(255,255,255,0.12);
+      border: 0.5px solid rgba(201,169,110,0.3);
       color: #fff;
       font-family: var(--serif);
-      font-size: clamp(38px, 9vw, 72px);
-      font-weight: 300;
-      line-height: 1;
-      padding: 20px 24px 16px;
-      min-width: clamp(80px, 18vw, 116px);
-      text-align: center;
-      letter-spacing: .02em;
-      transition: background .3s;
-    }
-
-    .cd-box.flash {
-      background: rgba(201,169,110,0.15);
-      border-color: rgba(201,169,110,0.3);
-    }
-
-    .cd-sep {
-      font-family: var(--serif);
-      font-size: clamp(32px, 8vw, 60px);
-      font-weight: 300;
-      color: rgba(255,255,255,0.18);
-      padding: 16px 2px 0;
-      line-height: 1;
-    }
-
-    .cd-lbl {
-      font-family: var(--sans);
-      font-size: 7px;
-      font-weight: 400;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      margin-top: 10px;
-    }
-
-    .countdown-date {
-      margin-top: 18px;
-      font-family: var(--serif);
-      font-size: clamp(13px, 2.5vw, 16px);
+      font-size: clamp(36px, 9vw, 72px);
       font-style: italic;
+      font-weight: 300;
+      line-height: 1;
+      padding: 22px 34px 18px;
+      letter-spacing: .03em;
+    }
+
+    .coming-soon-copy {
+      margin-top: 18px;
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: .22em;
+      text-transform: uppercase;
       color: rgba(255,255,255,0.3);
     }
 
@@ -376,6 +344,7 @@
       color: #fff;
       outline: none;
       transition: border-color .25s;
+      appearance: none;
       -webkit-appearance: none;
       border-radius: 0;
     }
@@ -535,14 +504,8 @@
       header { padding: 20px 20px; }
       .logo-wrap { height: 40px; }
       .logo-img { height: 128px; margin-top: -42px; }
-      .cd-box { padding: 14px 14px 11px; min-width: clamp(64px, 20vw, 90px); }
       .form-card { padding: 26px 22px 24px; }
       footer { flex-direction: column; gap: 10px; text-align: center; padding: 28px 20px; }
-    }
-
-    @media (max-width: 360px) {
-      .cd-sep { display: none; }
-      .countdown { gap: 8px; }
     }
   </style>
 </head>
@@ -586,7 +549,7 @@
         <span>Lafont</span><span class="dot">·</span>
         <span>Topic Eyewear</span><span class="dot">·</span>
         <span>Canada</span><span class="dot">·</span>
-        <span>Launching June 2026</span><span class="dot">·</span>
+        <span>Coming Soon</span><span class="dot">·</span>
 
         <span>Curated Once</span><span class="dot">·</span>
         <span>Never Restocked</span><span class="dot">·</span>
@@ -598,13 +561,13 @@
         <span>Lafont</span><span class="dot">·</span>
         <span>Topic Eyewear</span><span class="dot">·</span>
         <span>Canada</span><span class="dot">·</span>
-        <span>Launching June 2026</span><span class="dot">·</span>
+        <span>Coming Soon</span><span class="dot">·</span>
       </div>
     </div>
 
     <!-- Hero -->
     <section class="hero">
-      <p class="hero-eyebrow">The Collection Arrives</p>
+      <p class="hero-eyebrow">Coming Soon</p>
       <h1 class="hero-headline">
         Something worth<br>
         <em>waiting for.</em>
@@ -612,31 +575,11 @@
       <div class="hero-rule"></div>
       <p class="hero-tagline">Curated once &nbsp;·&nbsp; Never restocked</p>
 
-      <!-- Countdown -->
-      <div class="countdown-section">
-        <p class="countdown-eyebrow">Launching in</p>
-        <div class="countdown">
-          <div class="cd-unit">
-            <div class="cd-box" id="cd-days">12</div>
-            <span class="cd-lbl">Days</span>
-          </div>
-          <span class="cd-sep" aria-hidden="true">·</span>
-          <div class="cd-unit">
-            <div class="cd-box" id="cd-hours">00</div>
-            <span class="cd-lbl">Hours</span>
-          </div>
-          <span class="cd-sep" aria-hidden="true">·</span>
-          <div class="cd-unit">
-            <div class="cd-box" id="cd-mins">00</div>
-            <span class="cd-lbl">Min</span>
-          </div>
-          <span class="cd-sep" aria-hidden="true">·</span>
-          <div class="cd-unit">
-            <div class="cd-box" id="cd-secs">00</div>
-            <span class="cd-lbl">Sec</span>
-          </div>
-        </div>
-        <p class="countdown-date">July 1, 2026</p>
+      <!-- Coming soon callout -->
+      <div class="coming-soon-panel">
+        <p class="coming-soon-label">Launch Window</p>
+        <p class="coming-soon-title">Coming Soon</p>
+        <p class="coming-soon-copy">Join the waitlist for first access</p>
       </div>
     </section>
 
@@ -712,53 +655,6 @@
       }
 
       setInterval(next, INTERVAL);
-    }());
-
-    /* ═══════════════════════════════
-       COUNTDOWN
-    ═══════════════════════════════ */
-    (function () {
-      const target = new Date('2026-07-01T00:00:00').getTime();
-
-      function pad(n) { return String(n).padStart(2, '0'); }
-
-      function flash(id) {
-        const el = document.getElementById(id);
-        el.classList.add('flash');
-        setTimeout(() => el.classList.remove('flash'), 300);
-      }
-
-      let prevSecs = -1;
-
-      function tick() {
-        const diff = target - Date.now();
-
-        if (diff <= 0) {
-          ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => {
-            document.getElementById(id).textContent = '00';
-          });
-          return;
-        }
-
-        const days  = Math.floor(diff / 86400000);
-        const hours = Math.floor((diff % 86400000) / 3600000);
-        const mins  = Math.floor((diff % 3600000)  / 60000);
-        const secs  = Math.floor((diff % 60000)    / 1000);
-
-        document.getElementById('cd-days').textContent  = pad(days);
-        document.getElementById('cd-hours').textContent = pad(hours);
-        document.getElementById('cd-mins').textContent  = pad(mins);
-        document.getElementById('cd-secs').textContent  = pad(secs);
-
-        if (secs !== prevSecs) {
-          flash('cd-secs');
-          if (secs === 59) flash('cd-mins');
-          prevSecs = secs;
-        }
-      }
-
-      tick();
-      setInterval(tick, 1000);
     }());
 
     /* ═══════════════════════════════
